@@ -1,29 +1,43 @@
-# plain-frontend
+# via-cct-demo
 
-Minimal React + Vite frontend for `@via-labs-tech/usdm-bridge` — both directions, testnet (Cardano Preprod ↔ Midnight Preview). The package is used through its single `bridgeUSDM` export (the `wallet` param selects browser signing); everything else (wallet discovery, connect, balances) is plain frontend code against the wallet apis.
+Reference frontend for the **Via Labs quest: Midnight ↔ Cardano**. Transfers USDM both directions (Cardano Preprod ↔ Midnight Preview) with [`@via-labs-tech/usdm-bridge`](https://www.npmjs.com/package/@via-labs-tech/usdm-bridge) — one call:
 
-## Structure
+```ts
+import { bridgeUSDM } from '@via-labs-tech/usdm-bridge'
 
-- `src/hooks/useCardanoBridge.ts` — Cardano → Midnight: CIP-30 connect + `bridgeUSDM`, with a `step` state for every phase (building → completing → signing → submitting → confirming).
-- `src/hooks/useMidnightBridge.ts` — Midnight → Cardano: connector-v4 connect + `bridgeUSDM` (joining → proving → confirming; proving happens inside the wallet — no proof server).
-- `src/hooks/useInjectedWallets.ts` — discovers extensions under `window.cardano` / `window.midnight`.
-- `src/lib/cardanoWallet.ts` — CIP-30 balance CBOR decode + address bech32, no chain queries.
-- `src/components/` — the two cards, step indicator, wallet buttons. `src/App.tsx` just coordinates.
-- `src/config.ts` — network constants, token units, provider selection, explorer links.
+const { txHash } = await bridgeUSDM({
+    direction: 'cardano-to-midnight', // or 'midnight-to-cardano'
+    amount: '5',
+    recipient: 'mn_addr_...',
+    wallet: 'eternl', // extension name on window.cardano / window.midnight
+})
+```
 
-The hooks are self-contained — lift them into any React app.
+Everything else here is plain frontend code: wallet discovery, connect, balances, progress UI.
 
 ## Run
 
 ```bash
+cp .env.example .env   # optional Blockfrost key; empty = Koios via the /koios proxy
 npm install
 npm run dev
 ```
 
-Open the printed https URL (self-signed cert — accept the warning; wallet extensions require a secure context). Wallets must be on the testnet pair: a CIP-30 wallet on Cardano **Preprod** with tUSDM + ADA, a connector-v4 Midnight wallet on **Preview** with USDM + DUST.
+Open the printed **https** URL (self-signed cert — accept the warning). Wallets: a CIP-30 wallet on **Preprod** with tUSDM + ADA, a connector-v4 Midnight wallet on **Preview** with USDM + DUST.
 
-## Wiring notes
+## Where to look
 
-- Configuration is env vars baked in via `define` in `vite.config.ts` (same names as the Node `.env`): `VITE_BLOCKFROST_PREPROD` in `.env` becomes `BLOCKFROST_PROJECT_ID` → Blockfrost; without it the package defaults to the same-origin `/koios` proxy (Koios cannot be called cross-origin).
-- `public/artifacts/midnight` is a symlink to the package's `artifacts/midnight/preview` — the ZK assets the Midnight direction fetches at runtime.
+- `src/hooks/useCardanoBridge.ts` — Cardano → Midnight (building → completing → signing → submitting → confirming)
+- `src/hooks/useMidnightBridge.ts` — Midnight → Cardano (joining → proving → confirming; proving happens inside the wallet)
+- `src/hooks/useInjectedWallets.ts` — extension discovery
+- `src/lib/cardanoWallet.ts` — CIP-30 balance decode + bech32
+- `src/components/`, `src/App.tsx` — cards, steps, buttons
+- `src/config.ts` — networks, token units, explorer links
 
+The hooks are self-contained — lift them into any React app.
+
+## Notes
+
+- Env vars are baked in via `define` in `vite.config.ts`: `VITE_BLOCKFROST_PREPROD` → Blockfrost; unset → same-origin `/koios` proxy (public Koios has no CORS).
+- `public/artifacts/midnight` symlinks the package's ZK assets (`artifacts/midnight/preview`).
+- Full build-setup details: `node_modules/@via-labs-tech/usdm-bridge/FRONTEND.md`.
