@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" href="/vite.svg" />
+		<title>USDM Bridge — plain frontend</title>
+		<style>
+			:root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+			body { max-width: 720px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+			h1 { font-size: 1.4rem; }
+			.card { border: 1px solid #8884; border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; }
+			.card h2 { font-size: 1.05rem; margin-top: 0; }
+			.row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin: .5rem 0; }
+			input { flex: 1; min-width: 16rem; padding: .45rem .6rem; border: 1px solid #8886; border-radius: 6px; background: transparent; color: inherit; }
+			button { padding: .45rem .9rem; border: 1px solid #8886; border-radius: 6px; background: #6366f122; cursor: pointer; color: inherit; }
+			button:disabled { opacity: .5; cursor: default; }
+			button.primary { background: #6366f1; color: white; border-color: #6366f1; }
+			.status { font-size: .9rem; white-space: pre-wrap; word-break: break-all; color: #888; margin-top: .5rem; }
+			.status.error { color: #dc2626; }
+			.status a { color: #6366f1; }
+			.addr { font-family: monospace; font-size: .8rem; word-break: break-all; color: #888; }
+			.net { font-size: .85rem; color: #888; }
+			.connected { color: #16a34a; font-size: .9rem; }
+			.steps { list-style: none; padding: 0; margin: .5rem 0 0; display: flex; gap: 1rem; flex-wrap: wrap; font-size: .85rem; color: #8888; }
+			.steps .done { color: #16a34a; }
+			.steps .current { color: #6366f1; font-weight: 600; }
+		</style>
+	</head>
+	<body>
+		<div id="root"></div>
+		<script type="module" src="/src/main.tsx"></script>
+	</body>
+</html>

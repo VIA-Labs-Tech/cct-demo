@@ -1,0 +1,7 @@
+node_modules/
+dist/
+
+# secrets — API keys live here, never commit
+.env
+.env.*
+!.env.example
