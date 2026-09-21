@@ -1,6 +1,6 @@
 # cct-demo
 
-Reference frontend for the **Via Labs quest: Midnight ↔ Cardano**. Transfers USDM both directions (Cardano Preprod ↔ Midnight Preview) with [`@via-labs-tech/usdm-bridge`](https://www.npmjs.com/package/@via-labs-tech/usdm-bridge) — one call:
+Reference frontend for the **VIA Labs quest: Midnight ↔ Cardano**. Transfers USDM both directions (Cardano Preprod ↔ Midnight Preview) with [`@via-labs-tech/usdm-bridge`](https://www.npmjs.com/package/@via-labs-tech/usdm-bridge) — one call:
 
 ```ts
 import { bridgeUSDM } from '@via-labs-tech/usdm-bridge'
