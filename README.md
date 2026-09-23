@@ -1,5 +1,7 @@
 # cct-demo
 
+This project integrates with the Midnight Network.
+
 Reference frontend for the **VIA Labs quest: Midnight ↔ Cardano**. Transfers USDM both directions (Cardano Preprod ↔ Midnight Preview) with [`@via-labs-tech/usdm-bridge`](https://www.npmjs.com/package/@via-labs-tech/usdm-bridge) — one call:
 
 ```ts
@@ -41,3 +43,13 @@ The hooks are self-contained — lift them into any React app.
 - Env vars are baked in via `define` in `vite.config.ts`: `VITE_BLOCKFROST_PREPROD` → Blockfrost; unset → same-origin `/koios` proxy (public Koios has no CORS).
 - `public/artifacts/midnight` symlinks the package's ZK assets (`artifacts/midnight/preview`).
 - Full build-setup details: `node_modules/@via-labs-tech/usdm-bridge/FRONTEND.md`.
+
+## Built with
+
+- [@via-labs-tech/usdm-bridge](https://www.npmjs.com/package/@via-labs-tech/usdm-bridge) (MIT), which uses the Midnight.js and Midnight wallet SDK packages and Lucid Evolution
+- React and Vite
+- Koios or Blockfrost for Cardano reads
+
+## License
+
+Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE). "VIA Labs" and "VIA Network" are names of VIA Labs LLC; the license does not grant rights to use them.
